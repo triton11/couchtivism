@@ -1,0 +1,23 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a class="nav-btn" href="/">Home</a>
+        </li>
+        <% if logged_in? %>
+          <li>
+            <%= link_to 'Logout', "/logout", method: :delete %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to 'Log in', "/login", method: :get %>
+          </li>
+          <li>
+            <%= link_to 'Sign up', "/users/new", method: :get %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

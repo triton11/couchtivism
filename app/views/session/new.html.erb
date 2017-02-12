@@ -1,0 +1,22 @@
+<body class="message">
+  <div class="container">
+    <div class="vertical-center-row">
+      <div align="center">
+				<h1 id="log_in">Log In</h1>
+				<%= form_tag("/login", method: "post") do %>
+					<div class="field">
+					  <%= label_tag(:email, "Email:") %> <br>
+					  <%= text_field_tag(:email) %>
+					</div>
+					<div class="field">
+					  <%= label_tag(:password, "Password:") %> <br>
+					  <%= password_field_tag(:password) %>
+					</div>
+					<p>
+					  <%= submit_tag("Submit") %>
+					</p>
+				<% end %>
+			</div>
+    </div>
+  </div>
+</body>
