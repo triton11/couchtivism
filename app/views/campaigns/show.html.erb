@@ -1,0 +1,95 @@
+<p id="notice"><%= notice %></p>
+<div align="center">
+<p>
+  <h1>
+    <%= @campaign.title %>
+  </h1>
+</p>
+<p>
+  <%= @campaign.description %>
+</p>
+</div>
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-4">
+    <p> 
+      <strong> Today's Goals: </strong>
+      <ol style="text-align:left; list-style-position:inside;">
+        <% if @daily != nil %> 
+          <% @daily.each do |item| %>
+          <li>
+            <b>
+              <%= item.title %>
+            </b>
+            <br> &emsp; &emsp;
+            <%= item.content%>
+          </li>
+          <br>
+          <% end %>
+        <% end %>
+      </ol>
+    </p>
+  </div>
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-4">
+    <p> 
+      <strong> Future Goals: </strong>
+      <ol style="text-align:left; list-style-position:inside;">
+        <% if @weekly != nil %> 
+          <% @weekly.each do |item| %>
+          <li>
+            <b>
+              <%= item.title %>
+            </b>
+            <br> &emsp; &emsp;
+            <%= item.content%>
+          </li>
+          <br>
+          <% end %>
+        <% end %>
+        <% if @monthly != nil %> 
+          <% @monthly.each do |item| %>
+          <li>
+            <b>
+              <%= item.title %>
+            </b>
+            <br> &emsp; &emsp;
+            <%= item.content%>
+          </li>
+          <br>
+          <% end %>
+        <% end %>
+        <% if @yearly != nil %> 
+          <% @yearly.each do |item| %>
+          <li>
+            <b>
+              <%= item.title %>
+            </b>
+            <br> &emsp; &emsp;
+            <%= item.content%>
+          </li>
+          <br>
+          <% end %>
+        <% end %>
+      </ol>
+    </p>
+  </div>
+  <div class="col-md-2">
+  </div>
+</div class="row">
+<div align="center">
+<p>
+<% if @mods != nil %>
+<%= button_to('New Goal', '/goals/new', :class => 'btn btn-large btn-primary', 
+:method => 'get', params: {'campaign_id' => @campaign.id})  %>
+<strong> Mods: </strong> 
+	<% @mods.each do |item|%>
+		<p>
+			<%= item.email %>
+		</p>
+	<% end %>
+<% end %>
+</p>
+</div>

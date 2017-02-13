@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :goals
+  resources :campaigns
   resources :users
 
   root 'welcome#index'

@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<div align="center">
+<h1>Listing Campaigns</h1>
+
+<table border="1" style="width:600px; background-color:#FFF;">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @campaigns.each do |campaign| %>
+      <tr>
+        <td><%= link_to campaign.title, campaign %></td>
+        <td><%= campaign.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Campaign', new_campaign_path %>
+</div>

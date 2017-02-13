@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
 	include BCrypt
+  has_many :campaigns_users
+  has_many :campaigns, through: :campaigns_users
+  has_many :mods
+  has_many :campaigns, through: :mods
   validates :email, confirmation: true
   validates :email_confirmation, presence: true, on: :create
   validates :email, uniqueness: { case_sensitive: false }

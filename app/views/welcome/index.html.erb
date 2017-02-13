@@ -1,3 +1,17 @@
 <div align="center">
 	<h1> Welcome! </h1>
+  <% if current_user != nil %>
+    <%= button_to('New Campaign', 'campaigns/new', :class => 'btn btn-large btn-primary', :method => 'get')  %>
+  <% else %> 
+    <%= button_to('New Campaign', '/login', :class => 'btn btn-large btn-primary')  %>
+  <% end %>
+<h2> Or search for an existing campaign: </h2>
+<br>
+  <%= form_tag campaigns_path, :method => 'get' do %>
+    <p>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "Search", :name => nil %>
+    </p>
+  <% end %>
+
 </div>
