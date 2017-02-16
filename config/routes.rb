@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  
+
   resources :goals
   resources :campaigns
   resources :users
@@ -10,6 +12,10 @@ Rails.application.routes.draw do
   post '/login' => 'session#create'
   delete '/logout' => 'session#destroy'
   get 'welcome/index'
+  get 'campaigns/points/new' => 'points#new'
+  post 'campaigns/points/new' => 'points#create'
+  post 'campaigns/join' => 'campaigns#join'
+  post 'campaigns/completed' => 'campaigns#complete'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212033055) do
+ActiveRecord::Schema.define(version: 20170216184914) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
@@ -39,9 +39,11 @@ ActiveRecord::Schema.define(version: 20170212033055) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "time"
+    t.integer  "user_id"
   end
 
   add_index "goals", ["campaign_id"], name: "index_goals_on_campaign_id"
+  add_index "goals", ["user_id"], name: "index_goals_on_user_id"
 
   create_table "mods", force: :cascade do |t|
     t.integer  "user_id"
@@ -53,6 +55,17 @@ ActiveRecord::Schema.define(version: 20170212033055) do
 
   add_index "mods", ["campaign_id"], name: "index_mods_on_campaign_id"
   add_index "mods", ["user_id"], name: "index_mods_on_user_id"
+
+  create_table "points", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "campaign_id"
+    t.integer  "total"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "points", ["campaign_id"], name: "index_points_on_campaign_id"
+  add_index "points", ["user_id"], name: "index_points_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email"

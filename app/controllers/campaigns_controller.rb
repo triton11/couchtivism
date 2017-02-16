@@ -15,12 +15,46 @@ class CampaignsController < ApplicationController
     @weekly = @campaign.goals.where(time: 2)
     @month = @campaign.goals.where(time: 3)
     @year = @campaign.goals.where(time: 4)
-    if logged_in? 
-      if (@campaign.mods & current_user.mods)
-        @mods = @campaign.mods
+    @points = 0
+    if (logged_in?)
+      current_user.goals.where(campaign_id: @campaign.id).each do |item|
+        @points += item.points
       end
     end
   end
+
+  def join
+    @campaign = Campaign.find_by(id: params[:campaign])
+    @campaign.users << current_user
+    current_user.campaigns << @campaign
+    current_user.save
+    respond_to do |format|
+      if @campaign.save
+        format.html { redirect_to @campaign, notice: 'Campaign was successfully joined.' }
+        format.json { render :show, status: :created, location: @campaign }
+      else
+        format.html { render :new }
+        format.json { render json: @campaign.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def complete
+    @campaign = Campaign.find_by(id: params[:campaign])
+    @goal = Goal.find_by(id: params[:goal])
+    current_user.goals << @goal
+    respond_to do |format|
+      if current_user.save
+        format.html { redirect_to @campaign, notice: 'Complete' }
+        format.json { render :show, status: :created, location: @campaign }
+      else
+        format.html { render :new }
+        format.json { render json: @campaign.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
 
   # GET /campaigns/new
   def new

@@ -10,31 +10,80 @@
 </p>
 </div>
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-1">
   </div>
   <div class="col-md-4">
-    <p> 
-      <strong> Today's Goals: </strong>
-      <ol style="text-align:left; list-style-position:inside;">
+    <strong> Today's Goals: </strong>
+    <table border="1" style="width:400px; background-color:#FFF;">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Points</th>
+          <th>Complete</th>
+        </tr>
+      </thead>
+      <tbody>
         <% if @daily != nil %> 
           <% @daily.each do |item| %>
-          <li>
-            <b>
-              <%= item.title %>
-            </b>
-            <br> &emsp; &emsp;
-            <%= item.content%>
-          </li>
-          <br>
+          <tr>
+            <td>
+              <%= item.title %> 
+            </td>
+            <td>
+              <%= link_to item.content, "http://#{item.content}"%>
+            </td>
+            <td>
+              <%= item.points %> 
+            </td>
+            <td>
+              <% if logged_in? %>
+                <% if (current_user.hascampaign(@campaign.id)) %>
+                  <% unless (current_user.hasgoal(item.id)) %>
+                    <%= form_tag 'completed' do |f| %>
+                      <p>
+                        <%= hidden_field_tag :goal, item.id %>
+                        <%= hidden_field_tag :campaign, @campaign.id %>
+                        <%= submit_tag "Mark Complete" %>
+                      </p>
+                    <% end %>
+                  <% else %>
+                    Complete!
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
           <% end %>
         <% end %>
-      </ol>
-    </p>
+      </tbody>
+    </table>
   </div>
   <div class="col-md-2">
   </div>
   <div class="col-md-4">
-    <p> 
+    <strong> My Stats: </strong>
+    <% if (current_user == nil) %>
+      <%= button_to('Login', '/login', :class => 'btn btn-large btn-primary')  %>
+    <% elsif (!(current_user.hascampaign(@campaign.id))) %>
+      <%= form_tag 'join' do |f| %>
+        <p>
+          <%= hidden_field_tag :campaign, @campaign.id %>
+          <%= hidden_field_tag :user, current_user.id %>
+          <%= submit_tag "Join Campaign" %>
+        </p>
+      <% end %>
+    <% else %>
+      <br>
+      Points:
+      <%= @points %>
+      <br>
+      Level:
+      <%= @points/10 %>
+
+    <% end %>
+
+    <!-- <p> 
       <strong> Future Goals: </strong>
       <ol style="text-align:left; list-style-position:inside;">
         <% if @weekly != nil %> 
@@ -49,8 +98,8 @@
           <br>
           <% end %>
         <% end %>
-        <% if @monthly != nil %> 
-          <% @monthly.each do |item| %>
+        <% if @month != nil %> 
+          <% @month.each do |item| %>
           <li>
             <b>
               <%= item.title %>
@@ -61,8 +110,8 @@
           <br>
           <% end %>
         <% end %>
-        <% if @yearly != nil %> 
-          <% @yearly.each do |item| %>
+        <% if @year != nil %> 
+          <% @year.each do |item| %>
           <li>
             <b>
               <%= item.title %>
@@ -74,22 +123,24 @@
           <% end %>
         <% end %>
       </ol>
-    </p>
+    </p> -->
   </div>
   <div class="col-md-2">
   </div>
 </div class="row">
 <div align="center">
 <p>
-<% if @mods != nil %>
-<%= button_to('New Goal', '/goals/new', :class => 'btn btn-large btn-primary', 
+<% if logged_in? %>
+  <% if @campaign.mods.find_by(email: current_user.email) != nil %>
+    <%= button_to('New Goal', '/goals/new', :class => 'btn btn-large btn-primary', 
 :method => 'get', params: {'campaign_id' => @campaign.id})  %>
+  <% end %>
+<% end %>
 <strong> Mods: </strong> 
-	<% @mods.each do |item|%>
-		<p>
-			<%= item.email %>
-		</p>
-	<% end %>
+<% @campaign.mods.each do |item|%>
+	<p>
+		<%= item.email %>
+	</p>
 <% end %>
 </p>
 </div>
