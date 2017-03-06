@@ -28,7 +28,7 @@
   </div>
   <div class="field">
     <%= f.label :time %><br>
-    <%= f.select :time, [["Daily", 1], ["Week", 2], ["Month", 3], ["Year", 4]] %>
+    <%= f.select :time, [["Daily", 1], ["Week", 7], ["Month", 31], ["Year", 360]] %>
   </div>
 
   <%= f.hidden_field :campaign_id, :value => @campaign.id %>

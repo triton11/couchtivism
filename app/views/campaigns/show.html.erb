@@ -58,6 +58,115 @@
         <% end %>
       </tbody>
     </table>
+    Other Goals:
+    <table border="1" style="width:400px; background-color:#FFF;">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Points</th>
+          <th>Complete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @weekly != nil %> 
+          <% @weekly.each do |item| %>
+          <tr>
+            <td>
+              <%= item.title %> 
+            </td>
+            <td>
+              <%= link_to item.content, "http://#{item.content}"%>
+            </td>
+            <td>
+              <%= item.points %> 
+            </td>
+            <td>
+              <% if logged_in? %>
+                <% if (current_user.hascampaign(@campaign.id)) %>
+                  <% unless (current_user.hasgoal(item.id)) %>
+                    <%= form_tag 'completed' do |f| %>
+                      <p>
+                        <%= hidden_field_tag :goal, item.id %>
+                        <%= hidden_field_tag :campaign, @campaign.id %>
+                        <%= submit_tag "Mark Complete" %>
+                      </p>
+                    <% end %>
+                  <% else %>
+                    Complete!
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        <% end %>
+        <% if @monthly != nil %> 
+          <% @monthly.each do |item| %>
+          <tr>
+            <td>
+              <%= item.title %> 
+            </td>
+            <td>
+              <%= link_to item.content, "http://#{item.content}"%>
+            </td>
+            <td>
+              <%= item.points %> 
+            </td>
+            <td>
+              <% if logged_in? %>
+                <% if (current_user.hascampaign(@campaign.id)) %>
+                  <% unless (current_user.hasgoal(item.id)) %>
+                    <%= form_tag 'completed' do |f| %>
+                      <p>
+                        <%= hidden_field_tag :goal, item.id %>
+                        <%= hidden_field_tag :campaign, @campaign.id %>
+                        <%= submit_tag "Mark Complete" %>
+                      </p>
+                    <% end %>
+                  <% else %>
+                    Complete!
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        <% end %>
+        <% if @yearly != nil %> 
+          <% @yearly.each do |item| %>
+          <tr>
+            <td>
+              <%= item.title %> 
+            </td>
+            <td>
+              <%= link_to item.content, "http://#{item.content}"%>
+            </td>
+            <td>
+              <%= item.points %> 
+            </td>
+            <td>
+              <% if logged_in? %>
+                <% if (current_user.hascampaign(@campaign.id)) %>
+                  <% unless (current_user.hasgoal(item.id)) %>
+                    <%= form_tag 'completed' do |f| %>
+                      <p>
+                        <%= hidden_field_tag :goal, item.id %>
+                        <%= hidden_field_tag :campaign, @campaign.id %>
+                        <%= submit_tag "Mark Complete" %>
+                      </p>
+                    <% end %>
+                  <% else %>
+                    Complete!
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
   </div>
   <div class="col-md-2">
   </div>

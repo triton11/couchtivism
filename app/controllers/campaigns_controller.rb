@@ -12,9 +12,29 @@ class CampaignsController < ApplicationController
   def show
     @campaign = Campaign.find_by(id: params[:id])
     @daily = @campaign.goals.where(time: 1)
-    @weekly = @campaign.goals.where(time: 2)
-    @month = @campaign.goals.where(time: 3)
-    @year = @campaign.goals.where(time: 4)
+    @daily.each do |inst|
+      if (!(inst.calculate))
+        @daily.remove(inst)
+      end
+    end
+    @weekly = @campaign.goals.where(time: 7)
+    @weekly.each do |inst|
+      if (!(inst.calculate))
+        @weekly.remove(inst)
+      end
+    end
+    @monthly = @campaign.goals.where(time: 31)
+    @monthly.each do |inst|
+      if (!(inst.calculate))
+        @monthly.remove(inst)
+      end
+    end
+    @yearly = @campaign.goals.where(time: 360)
+    @yearly.each do |inst|
+      if (!(inst.calculate))
+        @yearly.remove(inst)
+      end
+    end
     @points = 0
     if (logged_in?)
       current_user.goals.where(campaign_id: @campaign.id).each do |item|
